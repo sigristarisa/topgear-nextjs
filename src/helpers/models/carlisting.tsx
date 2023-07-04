@@ -78,6 +78,7 @@ export default class Car {
     } = filter;
 
     console.log("filter", filter);
+    console.log("make", make);
 
     const foundCarlisting = await dbClient.carlisting.findMany({
       where: {
@@ -86,23 +87,23 @@ export default class Car {
           lte: mileageMax,
         },
         make: {
-          name: make?.name,
+          name: make?.name === null ? make?.name : undefined,
         },
         model: {
-          name: model?.name,
+          name: model?.name === null ? model?.name : undefined,
         },
         price: {
-          gte: priceMin,
-          lte: priceMax,
+          gte: priceMin === null ? priceMin : undefined,
+          lte: priceMax === null ? priceMax : undefined,
         },
         gearboxType: {
-          name: gearbox?.name,
+          name: gearbox?.name === null ? gearbox?.name : undefined,
         },
         fuelType: {
-          name: fuel?.name,
+          name: fuel?.name === null ? fuel?.name : undefined,
         },
         driveType: {
-          name: drive?.name,
+          name: drive?.name === null ? drive?.name : undefined,
         },
       },
       include: {
