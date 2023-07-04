@@ -5,7 +5,7 @@ import {
 } from "next";
 import { useContext } from "react";
 import Layout from "./components/Layout";
-// import CarList from "./components/CarList";
+import CarList from "./components/CarList";
 // import Filter from "./components/Filter";
 import Car from "../helpers/models/carlisting";
 import Make from "../helpers/models/make";
@@ -37,7 +37,7 @@ const Home = ({
       <main className="w-9/12 mx-auto flex justify-center border-2 border-red-500 border-solid">
         <aside className="w-3/12">{/* <Filter makes={makes} /> */}</aside>
         <aside className="w-9/12">
-          {/* <CarList carlisting={carlisting} /> */}
+          <CarList carlisting={carlisting} />
         </aside>
       </main>
     </Layout>
