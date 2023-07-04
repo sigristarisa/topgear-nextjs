@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("NEXT_PUBLIC_DATABASE_URL")
+  shadowDatabaseUrl = env("NEXT_PUBLIC_SHADOW_DATABASE_URL")
+}
+
+model Carlisting {
+  id            Int @id @default(autoincrement())
+  mileage       Int
+  description   String
+  price         Int
+  make          Make @relation(fields: [makeId], references: [id])
+  makeId        Int
+  model         Model @relation(fields: [modelId], references: [id])
+  modelId       Int
+  images        Image[]
+  gearboxType   GearboxType @relation(fields: [gearboxId], references: [id])
+  gearboxId     Int
+  driveType     DriveType @relation(fields: [driveId], references: [id])
+  driveId     Int
+  fuelType      FuelType @relation(fields: [fuelId], references: [id])
+  fuelId        Int
+  is_online     Boolean 
+  order         Order? @relation(fields: [orderId], references: [id])
+  orderId       Int? @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime? @updatedAt
+}
+
+model Make {
+  id            Int @id @default(autoincrement())
+  name          String
+  carlisting    Carlisting[]
+}
+
+model Model {
+  id            Int @id @default(autoincrement())
+  name          String
+  carlisting    Carlisting[]
+  }
+
+model Image {
+  id            Int @id @default(autoincrement())
+  url           String
+  carlisting    Carlisting @relation(fields: [carlistingId], references: [id])
+  carlistingId  Int
+}
+
+model GearboxType {
+  id            Int @id @default(autoincrement())
+  name          String
+  carlisting    Carlisting[]
+}
+
+model DriveType {
+  id            Int @id @default(autoincrement())
+  name          String
+  carlisting    Carlisting[]
+}
+
+model FuelType {
+  id            Int @id @default(autoincrement())
+  name          String
+  carlisting    Carlisting[]
+}
+
+model Order {
+  id                 Int @id @default(autoincrement())
+  carlisting         Carlisting?
+  hasDeliveryService Boolean
+  totalPrice         Int
+  customer           Customer @relation(fields:[customerId], references:[id])
+  customerId         Int
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Customer {
+  id                Int @id @default(autoincrement())
+  firstName         String
+  lastName          String
+  email             String
+  order             Order[]
+}
