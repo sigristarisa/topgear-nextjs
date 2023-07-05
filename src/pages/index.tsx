@@ -3,14 +3,14 @@ import {
   GetServerSideProps,
   InferGetStaticPropsType,
 } from "next";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Layout from "./components/Layout";
 import CarList from "./components/CarList";
 import Filter from "./components/Filter";
 import Car from "../helpers/models/carlisting";
 import Make from "../helpers/models/make";
 import { Carlisting, MakeType } from "../helpers/types";
-import { filterContext } from "../helpers/createContext";
+import { filterContext, carlistingContext } from "../helpers/createContext";
 
 export const getStaticProps: GetStaticProps = async () => {
   const carRes = await Car.findAll();
@@ -31,6 +31,20 @@ const Home = ({
   makes,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { filter, setFilter } = useContext(filterContext);
+  const { filterCarlisting, setCarlisting } = useContext(carlistingContext);
+
+  useEffect(() => {
+    const context = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(filter),
+    };
+    fetch("http://localhost:3000/api/car", context)
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, [filter]);
 
   return (
     <Layout>

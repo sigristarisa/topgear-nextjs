@@ -82,29 +82,7 @@ export default class Car {
 
     const foundCarlisting = await dbClient.carlisting.findMany({
       where: {
-        mileage: {
-          gte: mileageMin,
-          lte: mileageMax,
-        },
-        make: {
-          name: make?.name === null ? make?.name : undefined,
-        },
-        model: {
-          name: model?.name === null ? model?.name : undefined,
-        },
-        price: {
-          gte: priceMin === null ? priceMin : undefined,
-          lte: priceMax === null ? priceMax : undefined,
-        },
-        gearboxType: {
-          name: gearbox?.name === null ? gearbox?.name : undefined,
-        },
-        fuelType: {
-          name: fuel?.name === null ? fuel?.name : undefined,
-        },
-        driveType: {
-          name: drive?.name === null ? drive?.name : undefined,
-        },
+        makeId: make?.id === null ? make?.id : undefined,
       },
       include: {
         make: true,
@@ -114,6 +92,7 @@ export default class Car {
         fuelType: true,
       },
     });
+    console.log("found carlisting", foundCarlisting);
     return foundCarlisting;
   }
 }

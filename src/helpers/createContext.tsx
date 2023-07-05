@@ -1,5 +1,10 @@
 import { createContext } from "react";
-import { FilterType } from "../helpers/types";
+import { Carlisting, FilterType, MakeType } from "../helpers/types";
+
+const testMake: MakeType = {
+  id: 2,
+  name: "skoda",
+};
 
 export const defaultFilter: FilterType = {
   make: null,
@@ -13,16 +18,22 @@ export const defaultFilter: FilterType = {
   drive: null,
 };
 
-type GlobalContext = {
+type FilterContextType = {
   filter: FilterType;
   setFilter: (filter: FilterType) => void;
 };
 
-export const filterContext = createContext<GlobalContext>({
+type CarlistingContextType = {
+  filterCarlisting: Carlisting[] | [];
+  setCarlisting: (carlisting: Carlisting[]) => void;
+};
+
+export const filterContext = createContext<FilterContextType>({
   filter: defaultFilter,
   setFilter: () => {},
 });
 
-// create filter type
-// create an object that contains all the filter variables
-// create context according the filter, and pass it down
+export const carlistingContext = createContext<CarlistingContextType>({
+  filterCarlisting: [],
+  setCarlisting: () => {},
+});

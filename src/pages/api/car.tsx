@@ -4,12 +4,10 @@ import Car from "../../helpers/models/carlisting";
 import { Data } from "../../helpers/types";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  console.log("req", JSON.stringify(req.body));
-  console.log("hello?");
   try {
     const foundCarlisting = await Car.findByFilter(req.body);
 
-    if (!foundCarlisting) {
+    if (!foundCarlisting.length) {
       return sendDataResponse(res, 404, { id: "cars not found" });
     }
 

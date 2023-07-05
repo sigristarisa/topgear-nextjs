@@ -1,7 +1,11 @@
 import { useState } from "react";
 import Header from "./Header";
-import { FilterType } from "../../helpers/types";
-import { filterContext, defaultFilter } from "../../helpers/createContext";
+import { Carlisting, FilterType } from "../../helpers/types";
+import {
+  filterContext,
+  defaultFilter,
+  carlistingContext,
+} from "../../helpers/createContext";
 
 interface Children {
   children: JSX.Element | JSX.Element[];
@@ -9,12 +13,16 @@ interface Children {
 
 const Layout = ({ children }: Children) => {
   const [filter, setFilter] = useState<FilterType>(defaultFilter);
+  const [filterCarlisting, setCarlisting] = useState<Carlisting[]>([]);
+
   return (
     <filterContext.Provider value={{ filter, setFilter }}>
-      <div>
-        <Header />
-        <main>{children}</main>
-      </div>
+      <carlistingContext.Provider value={{ filterCarlisting, setCarlisting }}>
+        <div>
+          <Header />
+          <main>{children}</main>
+        </div>
+      </carlistingContext.Provider>
     </filterContext.Provider>
   );
 };
