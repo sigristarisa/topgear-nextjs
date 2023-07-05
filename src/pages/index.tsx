@@ -1,9 +1,5 @@
-import {
-  GetStaticProps,
-  GetServerSideProps,
-  InferGetStaticPropsType,
-} from "next";
-import { useContext, useEffect } from "react";
+import { GetStaticProps, InferGetStaticPropsType } from "next";
+import { useContext, useEffect, useState } from "react";
 import Layout from "./components/Layout";
 import CarList from "./components/CarList";
 import Filter from "./components/Filter";
@@ -32,6 +28,7 @@ const Home = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { filter, setFilter } = useContext(filterContext);
   const { filterCarlisting, setCarlisting } = useContext(carlistingContext);
+  const [filterActive, setFilterActive] = useState<boolean>(false);
 
   useEffect(() => {
     const context = {
@@ -43,17 +40,29 @@ const Home = ({
     };
     fetch("http://localhost:3000/api/car", context)
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        setCarlisting(data.data);
+      });
   }, [filter]);
 
+  console.log("filter", filter);
   return (
     <Layout>
       <main className="w-9/12 mx-auto flex justify-center border-2 border-red-500 border-solid">
         <aside className="w-3/12">
-          <Filter makes={makes} />
+          <Filter
+            makes={makes}
+            filter={filter}
+            setFilter={setFilter}
+            setFilterActive={setFilterActive}
+          />
         </aside>
         <aside className="w-9/12">
-          <CarList carlisting={carlisting} />
+          {filterActive ? (
+            <CarList carlisting={filterCarlisting} />
+          ) : (
+            <CarList carlisting={carlisting} />
+          )}
         </aside>
       </main>
     </Layout>

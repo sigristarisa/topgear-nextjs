@@ -1,25 +1,19 @@
 import { createContext } from "react";
-import {
-  Carlisting,
-  FilterType,
-  MakeType,
-  ModelType,
-  GearboxType,
-} from "../helpers/types";
+import { Carlisting, FilterType, MakeType, ModelType } from "../helpers/types";
 
-const testMake: MakeType = {
-  id: 2,
-  name: "skoda",
-};
+// const testMake: MakeType = {
+//   id: 2,
+//   name: "skoda",
+// };
 
-const testModel: ModelType = {
-  id: 4,
-  name: "oktavia",
-};
+// const testModel: ModelType = {
+//   id: 4,
+//   name: "oktavia",
+// };
 
 export const defaultFilter: FilterType = {
-  make: testMake,
-  model: testModel,
+  make: null,
+  model: null,
   priceMin: undefined,
   priceMax: undefined,
   mileageMin: undefined,

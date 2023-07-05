@@ -77,9 +77,6 @@ export default class Car {
       fuel,
     } = filter;
 
-    console.log("make", make);
-    console.log("model", model);
-
     const foundCarlisting = await dbClient.carlisting.findMany({
       where: {
         AND: [
@@ -110,7 +107,6 @@ export default class Car {
         fuelType: true,
       },
     });
-    console.log("found carlisting", foundCarlisting);
     return foundCarlisting;
   }
 }
