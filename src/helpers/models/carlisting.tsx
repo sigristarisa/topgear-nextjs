@@ -77,12 +77,30 @@ export default class Car {
       fuel,
     } = filter;
 
-    console.log("filter", filter);
     console.log("make", make);
+    console.log("model", model);
 
     const foundCarlisting = await dbClient.carlisting.findMany({
       where: {
-        makeId: make?.id === null ? make?.id : undefined,
+        AND: [
+          {
+            mileage: {
+              gte: mileageMin,
+              lte: mileageMax,
+            },
+          },
+          {
+            price: {
+              gte: priceMin,
+              lte: priceMax,
+            },
+          },
+          { makeId: make?.id },
+          { modelId: model?.id },
+          { driveId: drive?.id },
+          { gearboxId: gearbox?.id },
+          { fuelId: fuel?.id },
+        ],
       },
       include: {
         make: true,

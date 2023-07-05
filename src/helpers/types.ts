@@ -35,8 +35,6 @@ export interface FuelTypeSeed {
   name: string;
 }
 
-export interface FilterType {}
-
 /*--- Client ---*/
 export interface Carlisting {
   id: number;
@@ -63,14 +61,14 @@ export interface Carlisting {
 
 export interface MakeType {
   id?: number;
-  name?: string;
+  name: string;
   carlisting?: Carlisting[] | [];
 }
 
 export interface ModelType {
   id: number;
   name: string;
-  carlisting: Carlisting[];
+  carlisting?: Carlisting[] | [];
 }
 
 export interface ImageType {
@@ -82,7 +80,7 @@ export interface ImageType {
 export interface GearboxType {
   id: number;
   name: string;
-  carlisting: Carlisting[];
+  carlisting?: Carlisting[];
 }
 
 export interface DriveType {
@@ -115,11 +113,11 @@ export interface CustomerType {
 export interface FilterType {
   make: MakeType | null;
   model: ModelType | null;
-  priceMin: number;
-  priceMax: number;
+  priceMin: number | undefined;
+  priceMax: number | undefined;
   gearbox: GearboxType | null;
-  mileageMin: number;
-  mileageMax: number;
+  mileageMin: number | undefined;
+  mileageMax: number | undefined;
   fuel: FuelType | null;
   drive: DriveType | null;
 }
