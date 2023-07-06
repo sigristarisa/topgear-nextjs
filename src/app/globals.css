@@ -13,5 +13,9 @@
 
 body {
   background: var(--background-rgb);
-  font-family: "Lufga", sans-serif;
+  font-family: "Lufga", sans-serif, 400;
+}
+
+a {
+  cursor: pointer;
 }

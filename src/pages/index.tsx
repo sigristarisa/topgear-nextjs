@@ -28,9 +28,10 @@ const Home = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { filter, setFilter } = useContext(filterContext);
   const { filterCarlisting, setCarlisting } = useContext(carlistingContext);
-  const [filterActive, setFilterActive] = useState<boolean>(false);
+  console.log("set", setCarlisting);
 
   useEffect(() => {
+    console.log("useEffect");
     const context = {
       method: "POST",
       headers: {
@@ -41,28 +42,21 @@ const Home = ({
     fetch("http://localhost:3000/api/car", context)
       .then((res) => res.json())
       .then((data) => {
+        console.log("carlisting", data.data);
         setCarlisting(data.data);
       });
-  }, [filter]);
+  }, [filter, setCarlisting]);
 
-  console.log("filter", filter);
+  console.log(filterCarlisting);
+
   return (
     <Layout>
       <main className="w-9/12 mx-auto flex justify-center border-2 border-red-500 border-solid">
         <aside className="w-3/12">
-          <Filter
-            makes={makes}
-            filter={filter}
-            setFilter={setFilter}
-            setFilterActive={setFilterActive}
-          />
+          <Filter makes={makes} filter={filter} setFilter={setFilter} />
         </aside>
         <aside className="w-9/12">
-          {filterActive ? (
-            <CarList carlisting={filterCarlisting} />
-          ) : (
-            <CarList carlisting={carlisting} />
-          )}
+          <CarList carlisting={carlisting} />
         </aside>
       </main>
     </Layout>

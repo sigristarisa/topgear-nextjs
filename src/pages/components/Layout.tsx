@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "./Header";
+import WiesoFarie from "./WiesoFarie";
 import { Carlisting, FilterType } from "../../helpers/types";
 import {
   filterContext,
@@ -20,6 +21,7 @@ const Layout = ({ children }: Children) => {
       <carlistingContext.Provider value={{ filterCarlisting, setCarlisting }}>
         <div>
           <Header />
+          <WiesoFarie />
           <main>{children}</main>
         </div>
       </carlistingContext.Provider>
