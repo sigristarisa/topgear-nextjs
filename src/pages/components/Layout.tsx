@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Header from "./Header";
-import WiesoFarie from "./WiesoFarie";
+import Header from "./Header/Header";
+import WiesoFarie from "./Header/WiesoFarie";
 import { Carlisting, FilterType } from "../../helpers/types";
 import {
   filterContext,
