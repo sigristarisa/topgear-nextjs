@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { useState } from "react";
+interface Props {
+  isClicked: boolean;
+  setIsClicked: (isClicked: boolean) => void;
+}
 
-const NavBar = () => {
-  const [isClicked, setIsClicked] = useState<boolean>(false);
-
+const NavBar = ({ isClicked, setIsClicked }: Props) => {
   return (
     <nav className="flex font-semibold text-blue-950">
       <ul className="flex justify-between items-center">

@@ -69,7 +69,7 @@ const WiesoFarie = () => {
   };
 
   return (
-    <div className="flex place-items-center border-red-700 border-solid border-2">
+    <div className="w-2/3 flex justify-around border-red-700 border-solid border-2">
       <WiesoFarieColumn content={entdeckeFarie} />
       <WiesoFarieColumn content={deinAuto} />
       <WiesoFarieColumn content={haeufigeFrage} />
