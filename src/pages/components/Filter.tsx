@@ -4,14 +4,17 @@ const Filter = ({
   makes,
   setFilter,
   filter,
+  setFilterIsActive,
 }: {
   makes: MakeType[];
   filter: FilterType;
   setFilter: (filter: FilterType) => void;
+  setFilterIsActive: (filterIsActive: boolean) => void;
 }) => {
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target as HTMLSelectElement;
     setFilter({ ...filter, [name]: value });
+    setFilterIsActive(true);
   };
 
   return (
