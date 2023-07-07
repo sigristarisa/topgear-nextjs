@@ -13,7 +13,7 @@ interface Props {
 
 const WiesoFarieColumn = ({ content }: Props) => {
   return (
-    <section className="w-60 border-cyan-700 border-solid border-2">
+    <section className="w-60  border-cyan-700 border-solid border-2">
       <h2>{content.title}</h2>
       <ul>
         {content.pages.map((page: Page, index) => (

@@ -23,7 +23,6 @@ const Layout = ({ children }: Children) => {
       <carlistingContext.Provider value={{ filterCarlisting, setCarlisting }}>
         <div className="flex flex-col items-center">
           <Header isClicked={isClicked} setIsClicked={setIsClicked} />
-          {isClicked && <WiesoFarie />}
           <main>{children}</main>
         </div>
       </carlistingContext.Provider>

@@ -1,6 +1,12 @@
 import WiesoFarieColumn from "./WiesoFarieColumn";
 
-const WiesoFarie = () => {
+interface Props {
+  isClicked: boolean;
+}
+
+const WiesoFarie = ({ isClicked }: Props) => {
+  const appear = (): string => (isClicked ? "translate-y-40px" : "");
+
   const entdeckeFarie = {
     title: "Entdecke Farie",
     pages: [
@@ -69,10 +75,13 @@ const WiesoFarie = () => {
   };
 
   return (
-    <div className="w-2/3 flex justify-around border-red-700 border-solid border-2">
-      <WiesoFarieColumn content={entdeckeFarie} />
-      <WiesoFarieColumn content={deinAuto} />
-      <WiesoFarieColumn content={haeufigeFrage} />
+    <div className="w-full h-[40rem] flex justify-center place-items border-cyan-700 border-solid border-2">
+      <div
+        className={`w-2/3  h-3/4 flex justify-around border-red-700 border-solid border-2`}>
+        <WiesoFarieColumn content={entdeckeFarie} />
+        <WiesoFarieColumn content={deinAuto} />
+        <WiesoFarieColumn content={haeufigeFrage} />
+      </div>
     </div>
   );
 };
