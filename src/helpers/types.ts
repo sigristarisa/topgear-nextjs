@@ -3,11 +3,11 @@ export interface CarlistingSeed {
   mileage: number;
   description: string;
   price: number;
-  makeId?: number;
-  modelId?: number;
-  gearboxId?: number;
-  driveId?: number;
-  fuelId?: number;
+  makeId: number;
+  modelId: number;
+  gearboxId: number;
+  driveId: number;
+  fuelId: number;
   is_online: boolean;
   orderId?: number | null;
 }

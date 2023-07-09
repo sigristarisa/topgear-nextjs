@@ -26,44 +26,34 @@ const Home = ({
   carlisting,
   makes,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { filter, setFilter } = useContext(filterContext);
-  const { filterCarlisting, setCarlisting } = useContext(carlistingContext);
-  const [filterIsActive, setFilterIsActive] = useState<boolean>(false);
+  // All car listings and makes are provided by Next.js through the static props.
+  // No data fetching is necessary.
+  console.log('car listings from backend', carlisting)
+  console.log('makes from backend', makes)
 
-  useEffect(() => {
-    const context = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(filter),
-    };
-    fetch("http://localhost:3000/api/car", context)
-      .then((res) => res.json())
-      .then((data) => {
-        setCarlisting(data.data);
-      });
-  }, [filter, setCarlisting]);
+  // Only piece of state is which make id is selected in the make filter.
+  // No selected filter value is represented by a falsey value (undefined or empty string).
+  // Initial value is undefined. no option is selected in the select element.
+  const [makeFilter, setMakeFilter] = useState<MakeType['id'] | undefined>(undefined)
+  // IMPORTANT TO UNDERSTAND: calling the setMakeFilter function provided by useState rerenders this component!
 
-  console.log(filterCarlisting);
+  // Filter all car listings to select the ones for the current makeFilter value.
+  // If no makeFilter is set, all car listings are shown. ( x ? y : z notation is called "ternary operator")
+  const filteredCarlistings = carlisting.filter(cl => makeFilter ? cl.makeId === makeFilter : true)
+  console.log('filtered car listings', filteredCarlistings)
 
   return (
     <Layout>
-      <main className="w-9/12 mx-auto flex justify-center border-2 border-red-500 border-solid">
+      <main className="flex justify-center w-9/12 mx-auto border-2 border-red-500 border-solid">
         <aside className="w-3/12">
           <Filter
             makes={makes}
-            filter={filter}
-            setFilter={setFilter}
-            setFilterIsActive={setFilterIsActive}
+            makeFilter={makeFilter}
+            setMakeFilter={setMakeFilter}
           />
         </aside>
         <aside className="w-9/12">
-          {filterIsActive ? (
-            <CarList carlisting={filterCarlisting} />
-          ) : (
-            <CarList carlisting={carlisting} />
-          )}
+          <CarList carlisting={filteredCarlistings} />
         </aside>
       </main>
     </Layout>
