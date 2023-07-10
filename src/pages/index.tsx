@@ -5,7 +5,7 @@ import CarList from "./components/CarList";
 import Filter from "./components/Filter";
 import Car from "../helpers/models/carlisting";
 import Make from "../helpers/models/make";
-import { Carlisting, MakeType, ModelType } from "../helpers/types";
+import { Carlisting, MakeType, ModelType, GearboxType } from "../helpers/types";
 
 export const getStaticProps: GetStaticProps = async () => {
   const carRes = await Car.findAll();
@@ -35,7 +35,7 @@ const Home = ({
     // priceMax: undefined,
     // mileageMin: undefined,
     // mileageMax: undefined,
-    // gearbox: undefined,
+    gearboxId: undefined,
     // fuel: undefined,
     // drive: undefined,
   };
@@ -43,6 +43,7 @@ const Home = ({
   interface FilterType {
     makeId: MakeType["id"] | undefined;
     modelId: ModelType["id"] | undefined;
+    gearboxId: GearboxType["id"] | undefined;
   }
 
   // Only piece of state is which make id is selected in the make filter.
@@ -67,31 +68,29 @@ const Home = ({
   const filterCarlisting = () => {
     const filterEntries = Object.entries(filterWithValues());
     if (!filterEntries.length) return carlisting;
-    let filteredCarlisting;
-    console.log("filtered", filteredCarlisting);
-    for (let i = 0; i < filterEntries.length; i++) {
+    let filteredCarlisting: Carlisting[] | undefined;
+
+    for (const category of filterEntries) {
       filteredCarlisting = carlisting.filter((cl: Carlisting) => {
+        const i = filterEntries.indexOf(category);
         const key = filterEntries[i][0];
         const value = filterEntries[i][1];
-        return cl[key].id === value;
+        return cl[key] === value;
       });
     }
     return filteredCarlisting;
   };
 
-  console.log("filterCarlisting", filterCarlisting());
+  const filterModelByMake = (makeId: MakeType["id"]): ModelType[] => {
+    const models = [];
+    const filteredCarlisting = carlisting.filter(
+      (cl: Carlisting) => cl.makeId === makeId
+    );
 
-  // const filteredCarlistings = carlisting.filter((cl: Carlisting) => {
-  //   const filterEntries = Object.entries(filterWithValues());
-  //   let filteredArr;
-  //   for (const filterEntry of filterEntries) {
-  //     const key = filterEntry[0];
-  //     const value = filterEntry[1];
-  //     console.log("cl[key]", cl[key], "value", value);
-  //     return (filteredArr = cl[key].id === value);
-  //   }
-  //   return true;
-  // });
+    const filteredModel = filteredCarlisting.map((cl: Carlisting) => cl.model);
+
+    return filteredModel;
+  };
 
   return (
     <Layout>
@@ -101,6 +100,7 @@ const Home = ({
             makes={makes}
             filter={filter}
             setFilter={setFilter}
+            models={filterModelByMake(filter.makeId)}
             filteredCarlistings={filterCarlisting()}
           />
         </aside>

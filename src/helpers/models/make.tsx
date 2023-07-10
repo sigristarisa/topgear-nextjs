@@ -1,5 +1,4 @@
 import prisma from "@prisma/client";
-import { MakeType } from "../types";
 
 const dbClient = new prisma.PrismaClient();
 
