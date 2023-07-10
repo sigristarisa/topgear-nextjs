@@ -27,8 +27,18 @@ const Home = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   // All car listings and makes are provided by Next.js through the static props.
   // No data fetching is necessary.
-  console.log("car listings from backend", carlisting);
-  console.log("makes from backend", makes);
+
+  const defaultFilter = {
+    make: undefined,
+    model: undefined,
+    priceMin: undefined,
+    priceMax: undefined,
+    mileageMin: undefined,
+    mileageMax: undefined,
+    gearbox: undefined,
+    fuel: undefined,
+    drive: undefined,
+  };
 
   // Only piece of state is which make id is selected in the make filter.
   // No selected filter value is represented by a falsey value (undefined or empty string).
@@ -43,8 +53,8 @@ const Home = ({
   const filteredCarlistings = carlisting.filter((cl: Carlisting) =>
     makeFilter ? cl.makeId === makeFilter : true
   );
-  console.log("filtered car listings", filteredCarlistings);
 
+  console.log("filtered cl", filteredCarlistings);
   return (
     <Layout>
       <main className="flex justify-center w-9/12 mx-auto border-2 border-red-500 border-solid">
@@ -53,6 +63,7 @@ const Home = ({
             makes={makes}
             makeFilter={makeFilter}
             setMakeFilter={setMakeFilter}
+            filteredCarlistings={filteredCarlistings}
           />
         </aside>
         <aside className="w-9/12">
