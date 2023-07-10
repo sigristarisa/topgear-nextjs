@@ -1,7 +1,7 @@
 import { Carlisting } from "../../helpers/types";
 
+// CarList is a "dumb" component only rendering the car listings
 const CarList = ({ carlisting }: { carlisting: Carlisting[] }) => {
-  console.log("in car list", carlisting);
   return (
     <ul className="flex flex-wrap border-2 border-solid border-lime-600">
       {carlisting.map((car: Carlisting) => (

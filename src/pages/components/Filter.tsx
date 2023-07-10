@@ -1,28 +1,27 @@
 import { MakeType, FilterType } from "../../helpers/types";
 
+// Filter component shows selected option based on makeFilter value
+// and can update the makeFilter value on user input
 const Filter = ({
   makes,
-  setFilter,
-  filter,
-  setFilterIsActive,
+  makeFilter,
+  setMakeFilter,
 }: {
   makes: MakeType[];
-  filter: FilterType;
-  setFilter: (filter: FilterType) => void;
-  setFilterIsActive: (filterIsActive: boolean) => void;
+  makeFilter: MakeType['id'];
+  setMakeFilter: (newMakeFilter: MakeType['id']) => void;
 }) => {
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target as HTMLSelectElement;
-    setFilter({ ...filter, [name]: value });
-    setFilterIsActive(true);
+    console.log('changed to ', e.target.value)
+    setMakeFilter(Number(e.target.value));
   };
 
   return (
     <div>
-      <select name="make" onChange={handleFilter}>
+      <select name="make" onChange={handleFilter} value={makeFilter}>
         <option value={undefined}></option>
         {makes.map((make: MakeType) => (
-          <option key={make.id} value={make.name}>
+          <option key={make.id} value={make.id}>
             {make.name}
           </option>
         ))}
