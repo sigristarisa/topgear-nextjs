@@ -21,7 +21,7 @@ const Header = ({ isClicked, setIsClicked }: Props) => {
         </div>
         <NavBar isClicked={isClicked} setIsClicked={setIsClicked} />
       </header>
-      {isClicked && <WiesoFarie isClicked={isClicked} />}
+      <WiesoFarie isClicked={isClicked} />
     </div>
   );
 };

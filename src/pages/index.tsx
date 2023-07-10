@@ -1,12 +1,11 @@
 import { GetStaticProps, InferGetStaticPropsType } from "next";
-import { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import Layout from "./components/Layout";
 import CarList from "./components/CarList";
 import Filter from "./components/Filter";
 import Car from "../helpers/models/carlisting";
 import Make from "../helpers/models/make";
 import { Carlisting, MakeType } from "../helpers/types";
-import { filterContext, carlistingContext } from "../helpers/createContext";
 
 export const getStaticProps: GetStaticProps = async () => {
   const carRes = await Car.findAll();
@@ -28,19 +27,23 @@ const Home = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   // All car listings and makes are provided by Next.js through the static props.
   // No data fetching is necessary.
-  console.log('car listings from backend', carlisting)
-  console.log('makes from backend', makes)
+  console.log("car listings from backend", carlisting);
+  console.log("makes from backend", makes);
 
   // Only piece of state is which make id is selected in the make filter.
   // No selected filter value is represented by a falsey value (undefined or empty string).
   // Initial value is undefined. no option is selected in the select element.
-  const [makeFilter, setMakeFilter] = useState<MakeType['id'] | undefined>(undefined)
+  const [makeFilter, setMakeFilter] = useState<MakeType["id"] | undefined>(
+    undefined
+  );
   // IMPORTANT TO UNDERSTAND: calling the setMakeFilter function provided by useState rerenders this component!
 
   // Filter all car listings to select the ones for the current makeFilter value.
   // If no makeFilter is set, all car listings are shown. ( x ? y : z notation is called "ternary operator")
-  const filteredCarlistings = carlisting.filter(cl => makeFilter ? cl.makeId === makeFilter : true)
-  console.log('filtered car listings', filteredCarlistings)
+  const filteredCarlistings = carlisting.filter((cl: Carlisting) =>
+    makeFilter ? cl.makeId === makeFilter : true
+  );
+  console.log("filtered car listings", filteredCarlistings);
 
   return (
     <Layout>
