@@ -43,7 +43,7 @@ export interface Carlisting {
   price: number;
   make: MakeType | null;
   makeId: number;
-  model: ModelType | null;
+  model: ModelType;
   modelId: number;
   images: ImageType[];
   gearboxType: GearboxType | null;

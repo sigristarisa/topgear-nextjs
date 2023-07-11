@@ -36,9 +36,6 @@ const Home = ({
   makes,
   gearboxes,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  // All car listings and makes are provided by Next.js through the static props.
-  // No data fetching is necessary.
-
   const defaultFilter = {
     makeId: undefined,
     modelId: undefined,
@@ -51,14 +48,7 @@ const Home = ({
     // drive: undefined,
   };
 
-  // Only piece of state is which make id is selected in the make filter.
-  // No selected filter value is represented by a falsey value (undefined or empty string).
-  // Initial value is undefined. no option is selected in the select element.
   const [filter, setFilter] = useState<FilterType>(defaultFilter);
-  // IMPORTANT TO UNDERSTAND: calling the setMakeFilter function provided by useState rerenders this component!
-
-  // Filter all car listings to select the ones for the current makeFilter value.
-  // If no makeFilter is set, all car listings are shown. ( x ? y : z notation is called "ternary operator")
 
   const filterWithValues = (): FilterType | {} => {
     let newFilter = {};
@@ -88,19 +78,9 @@ const Home = ({
 
   const filterCarlisting = () => {
     const filterEntries = Object.entries(filterWithValues());
+    console.log("filterEntries", filterEntries);
     if (!filterEntries.length) return carlisting;
     let filteredCarlisting: Carlisting[] = carlisting;
-    // console.log("filterEntries", filterEntries);
-    console.log("filter entries", filterEntries);
-    // for (const category of filterEntries) {
-    //   filteredCarlisting = carlisting.filter((cl: Carlisting) => {
-    //     const i = filterEntries.indexOf(category);
-    //     const key = filterEntries[i][0];
-    //     const value = filterEntries[i][1];
-    //     return cl[key] === value;
-    //   });
-    // }
-    // return filteredCarlisting;
 
     for (const entry of filterEntries) {
       filteredCarlisting = filterByCategory(
@@ -112,14 +92,10 @@ const Home = ({
     return filteredCarlisting;
   };
 
-  const filterModelByMake = (makeId: MakeType["id"]): ModelType[] => {
+  const extractModel = (filteredCarlisting: Carlisting[]): ModelType[] => {
     const models = [];
-    const filteredCarlisting = carlisting.filter(
-      (cl: Carlisting) => cl.makeId === makeId
-    );
-    const filteredModel = filteredCarlisting.map((cl: Carlisting) => cl.model);
-
-    return filteredModel;
+    filteredCarlisting.forEach((cl: Carlisting) => models.push(cl.model));
+    return models;
   };
 
   return (
@@ -128,7 +104,7 @@ const Home = ({
         <aside className="w-3/12">
           <Filter
             makes={makes}
-            models={filterModelByMake(filter.makeId)}
+            models={extractModel(filterCarlisting())}
             gearboxes={gearboxes}
             filter={filter}
             setFilter={setFilter}

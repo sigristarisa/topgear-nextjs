@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   MakeType,
   ModelType,
@@ -14,10 +15,21 @@ interface Props {
 }
 
 const Filter = ({ makes, models, gearboxes, filter, setFilter }: Props) => {
-  const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleFilter = (
+    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>
+  ) => {
     const { name, value } = e.target;
-    setFilter({ ...filter, [name]: Number(value) });
+    if (typeof value === "boolean") {
+      filter[name] = [];
+      console.log("hi");
+      setFilter({ ...filter, [name]: filter[name].push(value) });
+      console.log("filter", filter);
+    } else {
+      setFilter({ ...filter, [name]: Number(value) });
+    }
   };
+
+  console.log("filter", filter);
 
   return (
     <div>
@@ -50,7 +62,9 @@ const Filter = ({ makes, models, gearboxes, filter, setFilter }: Props) => {
             <input
               type="checkbox"
               id={`${gearbox.name}-${gearbox.id}`}
-              value={true && gearbox?.id}
+              checked={gearbox?.id ? true : false}
+              value={gearbox?.id}
+              onChange={handleFilter}
             />
             <label htmlFor={`${gearbox.name}-${gearbox.id}`}>
               {gearbox.name}
