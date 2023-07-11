@@ -70,18 +70,44 @@ const Home = ({
     return newFilter;
   };
 
+  const filterByCategory = (
+    carlisting: Carlisting[],
+    categoryName: string,
+    ids: number | number[]
+  ) => {
+    const filteredCarlisting = carlisting.filter((cl: Carlisting) => {
+      if (typeof ids === "number") return cl[`${categoryName}`] === ids;
+      if (typeof ids === "object") {
+        for (const id of ids) {
+          return cl[`${categoryName}`] === id;
+        }
+      }
+    });
+    return filteredCarlisting;
+  };
+
   const filterCarlisting = () => {
     const filterEntries = Object.entries(filterWithValues());
     if (!filterEntries.length) return carlisting;
-    let filteredCarlisting: Carlisting[] | undefined;
+    let filteredCarlisting: Carlisting[] = carlisting;
+    // console.log("filterEntries", filterEntries);
+    console.log("filter entries", filterEntries);
+    // for (const category of filterEntries) {
+    //   filteredCarlisting = carlisting.filter((cl: Carlisting) => {
+    //     const i = filterEntries.indexOf(category);
+    //     const key = filterEntries[i][0];
+    //     const value = filterEntries[i][1];
+    //     return cl[key] === value;
+    //   });
+    // }
+    // return filteredCarlisting;
 
-    for (const category of filterEntries) {
-      filteredCarlisting = carlisting.filter((cl: Carlisting) => {
-        const i = filterEntries.indexOf(category);
-        const key = filterEntries[i][0];
-        const value = filterEntries[i][1];
-        return cl[key] === value;
-      });
+    for (const entry of filterEntries) {
+      filteredCarlisting = filterByCategory(
+        filteredCarlisting,
+        entry[0],
+        entry[1]
+      );
     }
     return filteredCarlisting;
   };

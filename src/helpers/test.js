@@ -15,4 +15,11 @@ const filterHasValues = (filter) => {
   return filterValues.find((category) => category) ? true : false;
 };
 
-console.log(filterHasValues(obj));
+const filterByGearbox = (carlistings, gearboxes) => {
+  const filteredCarlisting = carlistings.filter((cl) => {
+    for (const gearbox of gearboxes) {
+      cl.gearboxId === gearbox.id;
+    }
+  });
+  return filteredCarlisting;
+};

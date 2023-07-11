@@ -50,7 +50,7 @@ const Filter = ({ makes, models, gearboxes, filter, setFilter }: Props) => {
             <input
               type="checkbox"
               id={`${gearbox.name}-${gearbox.id}`}
-              value={gearbox?.id}
+              value={true && gearbox?.id}
             />
             <label htmlFor={`${gearbox.name}-${gearbox.id}`}>
               {gearbox.name}
