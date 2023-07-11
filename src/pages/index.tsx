@@ -5,18 +5,28 @@ import CarList from "./components/CarList";
 import Filter from "./components/Filter";
 import Car from "../helpers/models/carlisting";
 import Make from "../helpers/models/make";
-import { Carlisting, MakeType, ModelType, GearboxType } from "../helpers/types";
+import Gearbox from "../helpers/models/gearbox";
+import {
+  Carlisting,
+  MakeType,
+  ModelType,
+  GearboxType,
+  FilterType,
+} from "../helpers/types";
 
 export const getStaticProps: GetStaticProps = async () => {
   const carRes = await Car.findAll();
   const makeRes = await Make.findAll();
+  const gearboxRes = await Gearbox.findAll();
   const carlisting: Carlisting[] = await JSON.parse(JSON.stringify(carRes));
   const makes: MakeType[] = await JSON.parse(JSON.stringify(makeRes));
+  const gearboxes: GearboxType[] = await JSON.parse(JSON.stringify(gearboxRes));
 
   return {
     props: {
       carlisting,
       makes,
+      gearboxes,
     },
   };
 };
@@ -24,6 +34,7 @@ export const getStaticProps: GetStaticProps = async () => {
 const Home = ({
   carlisting,
   makes,
+  gearboxes,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   // All car listings and makes are provided by Next.js through the static props.
   // No data fetching is necessary.
@@ -39,12 +50,6 @@ const Home = ({
     // fuel: undefined,
     // drive: undefined,
   };
-
-  interface FilterType {
-    makeId: MakeType["id"] | undefined;
-    modelId: ModelType["id"] | undefined;
-    gearboxId: GearboxType["id"] | undefined;
-  }
 
   // Only piece of state is which make id is selected in the make filter.
   // No selected filter value is represented by a falsey value (undefined or empty string).
@@ -86,7 +91,6 @@ const Home = ({
     const filteredCarlisting = carlisting.filter(
       (cl: Carlisting) => cl.makeId === makeId
     );
-
     const filteredModel = filteredCarlisting.map((cl: Carlisting) => cl.model);
 
     return filteredModel;
@@ -98,10 +102,10 @@ const Home = ({
         <aside className="w-3/12">
           <Filter
             makes={makes}
+            models={filterModelByMake(filter.makeId)}
+            gearboxes={gearboxes}
             filter={filter}
             setFilter={setFilter}
-            models={filterModelByMake(filter.makeId)}
-            filteredCarlistings={filterCarlisting()}
           />
         </aside>
         <aside className="w-9/12">

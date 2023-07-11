@@ -64,49 +64,49 @@ export default class Car {
     return allCarlisting;
   }
 
-  static async findByFilter(filter: FilterType) {
-    const {
-      make,
-      model,
-      priceMin,
-      priceMax,
-      mileageMin,
-      mileageMax,
-      gearbox,
-      drive,
-      fuel,
-    } = filter;
+  // static async findByFilter(filter: FilterType) {
+  //   const {
+  //     make,
+  //     model,
+  //     priceMin,
+  //     priceMax,
+  //     mileageMin,
+  //     mileageMax,
+  //     gearbox,
+  //     drive,
+  //     fuel,
+  //   } = filter;
 
-    const foundCarlisting = await dbClient.carlisting.findMany({
-      where: {
-        AND: [
-          {
-            mileage: {
-              gte: mileageMin,
-              lte: mileageMax,
-            },
-          },
-          {
-            price: {
-              gte: priceMin,
-              lte: priceMax,
-            },
-          },
-          { makeId: make?.id },
-          { modelId: model?.id },
-          { driveId: drive?.id },
-          { gearboxId: gearbox?.id },
-          { fuelId: fuel?.id },
-        ],
-      },
-      include: {
-        make: true,
-        model: true,
-        gearboxType: true,
-        driveType: true,
-        fuelType: true,
-      },
-    });
-    return foundCarlisting;
-  }
+  //   const foundCarlisting = await dbClient.carlisting.findMany({
+  //     where: {
+  //       AND: [
+  //         {
+  //           mileage: {
+  //             gte: mileageMin,
+  //             lte: mileageMax,
+  //           },
+  //         },
+  //         {
+  //           price: {
+  //             gte: priceMin,
+  //             lte: priceMax,
+  //           },
+  //         },
+  //         { makeId: make?.id },
+  //         { modelId: model?.id },
+  //         { driveId: drive?.id },
+  //         { gearboxId: gearbox?.id },
+  //         { fuelId: fuel?.id },
+  //       ],
+  //     },
+  //     include: {
+  //       make: true,
+  //       model: true,
+  //       gearboxType: true,
+  //       driveType: true,
+  //       fuelType: true,
+  //     },
+  //   });
+  //   return foundCarlisting;
+  // }
 }

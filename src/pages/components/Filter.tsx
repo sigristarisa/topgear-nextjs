@@ -2,36 +2,22 @@ import {
   MakeType,
   ModelType,
   GearboxType,
-  Carlisting,
+  FilterType,
 } from "../../helpers/types";
 
-// Filter component shows selected option based on makeFilter value
-// and can update the makeFilter value on user input
-
-interface FilterType {
-  makeId: MakeType["id"] | undefined;
-  modelId: ModelType["id"] | undefined;
-  gearboxId: GearboxType["id"] | undefined;
-}
-const Filter = ({
-  makes,
-  filter,
-  setFilter,
-  models,
-  filteredCarlistings,
-}: {
+interface Props {
   makes: MakeType[];
   models: ModelType[];
+  gearboxes: GearboxType[];
   filter: FilterType;
   setFilter: (newFilter: FilterType) => void;
-  filteredCarlistings: Carlisting[];
-}) => {
+}
+
+const Filter = ({ makes, models, gearboxes, filter, setFilter }: Props) => {
   const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFilter({ ...filter, [name]: Number(value) });
   };
-
-  console.log("models", models);
 
   return (
     <div>
@@ -57,6 +43,20 @@ const Filter = ({
             </option>
           ))}
         </select>
+      </div>
+      <div className="gearbox-filter">
+        {gearboxes.map((gearbox: GearboxType, index) => (
+          <div key={index}>
+            <input
+              type="checkbox"
+              id={`${gearbox.name}-${gearbox.id}`}
+              value={gearbox?.id}
+            />
+            <label htmlFor={`${gearbox.name}-${gearbox.id}`}>
+              {gearbox.name}
+            </label>
+          </div>
+        ))}
       </div>
     </div>
   );

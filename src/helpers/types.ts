@@ -111,15 +111,9 @@ export interface CustomerType {
 }
 
 export interface FilterType {
-  make: MakeType | undefined;
-  model: ModelType | undefined;
-  priceMin: number | undefined;
-  priceMax: number | undefined;
-  gearbox: GearboxType | undefined;
-  mileageMin: number | undefined;
-  mileageMax: number | undefined;
-  fuel: FuelType | undefined;
-  drive: DriveType | undefined;
+  makeId: MakeType["id"] | undefined;
+  modelId: ModelType["id"] | undefined;
+  gearboxId: GearboxType["id"] | undefined;
 }
 
 export interface Data {

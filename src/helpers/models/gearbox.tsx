@@ -2,7 +2,7 @@ import prisma from "@prisma/client";
 
 const dbClient = new prisma.PrismaClient();
 
-export default class Make {
+export default class Gearbox {
   id: number;
   name: string;
 
@@ -11,11 +11,11 @@ export default class Make {
   }
 
   static async findAll() {
-    const allMake = await dbClient.make.findMany({
+    const allGearbox = await dbClient.gearboxType.findMany({
       include: {
         carlisting: true,
       },
     });
-    return allMake;
+    return allGearbox;
   }
 }
