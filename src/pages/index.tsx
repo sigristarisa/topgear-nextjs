@@ -36,6 +36,9 @@ const Home = ({
   makes,
   gearboxes,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  // All car listings and makes are provided by Next.js through the static props.
+  // No data fetching is necessary.
+
   const defaultFilter = {
     makeId: undefined,
     modelId: undefined,
@@ -43,7 +46,7 @@ const Home = ({
     // priceMax: undefined,
     // mileageMin: undefined,
     // mileageMax: undefined,
-    gearboxId: undefined,
+    gearboxId: [],
     // fuel: undefined,
     // drive: undefined,
   };
@@ -53,7 +56,7 @@ const Home = ({
   const filterWithValues = (): FilterType | {} => {
     let newFilter = {};
     for (const category in filter) {
-      if (filter[category]) {
+      if (filter[category] && filter[category].length) {
         newFilter = { ...newFilter, [category]: filter[category] };
       }
     }
@@ -78,7 +81,6 @@ const Home = ({
 
   const filterCarlisting = () => {
     const filterEntries = Object.entries(filterWithValues());
-    console.log("filterEntries", filterEntries);
     if (!filterEntries.length) return carlisting;
     let filteredCarlisting: Carlisting[] = carlisting;
 

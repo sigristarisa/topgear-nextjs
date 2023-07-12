@@ -113,7 +113,7 @@ export interface CustomerType {
 export interface FilterType {
   makeId: MakeType["id"] | undefined;
   modelId: ModelType["id"] | undefined;
-  gearboxId: GearboxType["id"] | undefined;
+  gearboxId: GearboxType[] | [];
 }
 
 export interface Data {
